@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion"; // Framer Motion for animation
+import { motion } from "framer-motion";
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
 
   const handleStart = () => {
@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-800 via-indigo-900 to-black flex flex-col justify-center items-center px-4 text-center">
-      {/* Heading */}
+      
       <motion.h1
         className="text-5xl sm:text-6xl font-bold text-white mb-6"
         initial={{ opacity: 0, y: -50 }}
