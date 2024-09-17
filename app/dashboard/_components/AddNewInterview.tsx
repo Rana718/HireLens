@@ -61,6 +61,7 @@ function AddNewInterview() {
 
             if(resp){
                 setOpenDialog(false);
+                console.log(resp[0].mockId);
                 router.push(`/dashboard/interviews/${resp[0].mockId}`)
             }
         } else {
@@ -72,43 +73,81 @@ function AddNewInterview() {
 
     return (
         <div>
-            <div className='p-10 border rounded-lg bg-black hover:scale-105 hover:shadow-md cursor-pointer transition-all'
+            <div
+                className="p-5 border rounded-lg bg-gradient-to-r from-gray-800 to-gray-900 hover:scale-110 hover:shadow-xl cursor-pointer transition-transform duration-300 ease-out"
                 onClick={() => setOpenDialog(true)}
             >
-                <h2 className='text-lg text-center text-white'>+ Add New</h2>
+                <h2 className="text-lg text-center text-white transition-colors duration-300 hover:text-yellow-400">
+                    + Add New
+                </h2>
             </div>
 
-            <Dialog open={openDialog} onOpenChange={setOpenDialog}> {/* Added onOpenChange for proper control */}
-                <DialogContent>
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                <DialogContent className="bg-gray-900 text-white p-8 rounded-lg shadow-lg animate-fadeInUp transition-all duration-500 ease-out">
                     <DialogHeader>
-                        <DialogTitle className='text-2xl'>Tell us more about your interview preparation</DialogTitle>
+                        <DialogTitle className="text-2xl text-gray-200">Tell us more about your interview preparation</DialogTitle>
                         <DialogDescription>
-                            <form onSubmit={submitHandler}> {/* Fixed submitHandler typo */}
-                                <h2>Add details about your job position/role, job description, and years of experience</h2>
+                            <form onSubmit={submitHandler}>
+                                <h2 className="text-gray-400 mb-4">
+                                    Add details about your job position/role, job description, and years of experience
+                                </h2>
 
-                                <div className='mt-7 my-3'>
-                                    <label>Job Role/Job Position</label>
-                                    <Input placeholder='Ex. Software Engineer' value={jobrole} onChange={(e) => setJobrole(e.target.value)} required />
+                                <div className="mt-7 my-3">
+                                    <label className="text-gray-300">Job Role/Job Position</label>
+                                    <Input
+                                        className="mt-2 bg-gray-800 text-white border-gray-700 focus:ring-yellow-400 focus:border-yellow-400"
+                                        placeholder="Ex. Software Engineer"
+                                        value={jobrole}
+                                        onChange={(e) => setJobrole(e.target.value)}
+                                        required
+                                    />
                                 </div>
 
-                                <div className='my-3'>
-                                    <label>Job Description/Tech Stack (In Short)</label>
-                                    <Textarea placeholder='Ex. React, Nextjs, Nodejs, Typescript, Tailwindcss' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} required />
+                                <div className="my-3">
+                                    <label className="text-gray-300">Job Description/Tech Stack (In Short)</label>
+                                    <Textarea
+                                        className="mt-2 bg-gray-800 text-white border-gray-700 focus:ring-yellow-400 focus:border-yellow-400"
+                                        placeholder="Ex. React, Nextjs, Nodejs, Typescript, Tailwindcss"
+                                        value={jobDescription}
+                                        onChange={(e) => setJobDescription(e.target.value)}
+                                        required
+                                    />
                                 </div>
 
-                                <div className='my-3'>
-                                    <label>Years of experience</label>
-                                    <Input placeholder='Ex. 2' type='number' max={50} value={yearOfExperience} onChange={(e) => setYearOfExperience(e.target.value)} required />
+                                <div className="my-3">
+                                    <label className="text-gray-300">Years of experience</label>
+                                    <Input
+                                        className="mt-2 bg-gray-800 text-white border-gray-700 focus:ring-yellow-400 focus:border-yellow-400"
+                                        placeholder="Ex. 2"
+                                        type="number"
+                                        max={50}
+                                        value={yearOfExperience}
+                                        onChange={(e) => setYearOfExperience(e.target.value)}
+                                        required
+                                    />
                                 </div>
 
-                                <div className='flex gap-5 justify-end'>
-                                    <Button variant="destructive" onClick={() => setOpenDialog(false)} >Cancel</Button>
-                                    <Button type='submit' disabled={loading}>
-                                        {loading ?
+                                <div className="flex gap-5 justify-end mt-5">
+                                    <Button
+                                        variant="destructive"
+                                        className="bg-red-600 hover:bg-red-500 text-white transition-colors duration-300"
+                                        onClick={() => setOpenDialog(false)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 transition-colors duration-300"
+                                    >
+                                        {loading ? (
                                             <>
-                                                <LoaderCircle className='animate-spin' /> Generating from AI
-                                            </> : 'Start Interview'
-                                        }
+                                                <LoaderCircle className="animate-spin mr-2" />
+                                                Generating from AI
+                                            </>
+                                        ) : (
+                                            'Start Interview'
+                                        )}
                                     </Button>
                                 </div>
                             </form>
