@@ -3,7 +3,6 @@ import { db } from '@/utils/db';
 import { MockInterview } from '@/utils/schema';
 import { useUser } from '@clerk/nextjs'
 import { desc, eq } from 'drizzle-orm';
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { InterviewData } from '@/types/interviewdata';
 import InterViewCard from './interviewcard';
@@ -20,7 +19,7 @@ function InterViewList() {
 
     const GetInterviewList = async () => {
         const result = await db.select().from(MockInterview)
-        //@ts-ignore
+        //@ts-expect-error
         .where(eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress))
         .orderBy(desc(MockInterview.id));
         console.log(result);

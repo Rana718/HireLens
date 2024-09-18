@@ -13,8 +13,21 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
 
+interface FeedbackItem {
+    id: number;
+    mockIdRef: string;
+    question: string;
+    correctAns: string;
+    userAns: string;
+    feedback: string;
+    rating: string;
+    userEmail: string;
+    createdAt: string;
+}
+
+
 function Feedback({ params }: { params: { interviewid: string } }) {
-    const [feedbacklist, setFeedbackList] = useState<any[]>([]);
+    const [feedbacklist, setFeedbackList] = useState<FeedbackItem[]>([]);
     const router = useRouter();
 
     useEffect(() => {
