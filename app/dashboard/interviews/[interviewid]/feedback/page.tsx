@@ -37,7 +37,8 @@ function Feedback({ params }: { params: { interviewid: string } }) {
     const Getfeedback = async () => {
         const result = await db.select().from(UserAnswer)
             .where(eq(UserAnswer.mockIdRef, params.interviewid)).orderBy(UserAnswer.id);
-        setFeedbackList(result);
+            //@ts-expect-error
+            setFeedbackList(result);
     }
 
     const handleStartInterview = () => {
