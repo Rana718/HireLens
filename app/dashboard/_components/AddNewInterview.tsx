@@ -1,24 +1,24 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
+import React, { useState } from 'react';
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog"
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { chatSession } from '@/utils/Aimod'
-import { LoaderCircle } from 'lucide-react'
-import { db } from '@/utils/db'
-// @ts-expect-error
+} from "@/components/ui/dialog";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { chatSession } from '@/utils/Aimod';
+import { LoaderCircle } from 'lucide-react';
+import { db } from '@/utils/db';
+// @ts-expect-error: UUID type may not be inferred correctly.
 import { v4 as uuidv4 } from 'uuid';
-import { MockInterview } from '@/utils/schema'
-import { useUser } from '@clerk/nextjs'
+import { MockInterview } from '@/utils/schema';
+import { useUser } from '@clerk/nextjs';
 import moment from 'moment';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 function AddNewInterview() {
     const [openDialog, setOpenDialog] = useState(false);
@@ -43,23 +43,23 @@ function AddNewInterview() {
         const modedata = (await result.response.text()).replace('```json', '').replace('```', '');
 
         if (modedata) {
-            // @ts-expect-error
+            // @ts-expect-error: Type inference may fail on db insert operation.
             const resp = await db.insert(MockInterview).values({
-                    mockId: uuidv4(),
-                    jsonMockResp: modedata,
-                    jobPosition: jobrole,
-                    jobDesc: jobDescription,
-                    jobExperience: yearOfExperience,
-                    createdBy: user?.primaryEmailAddress?.emailAddress,
-                    createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
-                }).returning({ mockId: MockInterview.mockId });
+                mockId: uuidv4(),
+                jsonMockResp: modedata,
+                jobPosition: jobrole,
+                jobDesc: jobDescription,
+                jobExperience: yearOfExperience,
+                createdBy: user?.primaryEmailAddress?.emailAddress,
+                createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+            }).returning({ mockId: MockInterview.mockId });
 
             console.log("Inserted ID::", resp);
 
-            if(resp){
+            if (resp) {
                 setOpenDialog(false);
                 console.log(resp[0].mockId);
-                router.push(`/dashboard/interviews/${resp[0].mockId}`)
+                router.push(`/dashboard/interviews/${resp[0].mockId}`);
             }
         } else {
             console.log("No Data Found");

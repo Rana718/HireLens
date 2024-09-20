@@ -32,7 +32,6 @@ export default function Page() {
         Start your journey with AI-powered mock interviews. Boost your confidence and sharpen your skills by receiving feedback on your interview performance. Let AI prepare you for your dream job!
       </motion.p>
 
-      
       <motion.div
         className="grid gap-6 sm:grid-cols-2 mb-8 text-left max-w-4xl"
         initial={{ opacity: 0 }}
@@ -60,12 +59,11 @@ export default function Page() {
         <div>
           <h3 className="text-xl font-semibold text-white">📊 Performance Analysis</h3>
           <p className="text-gray-400 mt-2">
-            Track your performance over time to see how much you've improved with each session.
+            Track your performance over time to see how much you&apos;ve improved with each session.
           </p>
         </div>
       </motion.div>
 
-      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -79,7 +77,6 @@ export default function Page() {
         </Button>
       </motion.div>
 
-      
       <motion.p
         className="text-sm text-gray-500 mt-12"
         initial={{ opacity: 0 }}
