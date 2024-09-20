@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { QuestionSectionProps } from '@/types/questionsectionprops';
 import { Mic, WebcamIcon } from 'lucide-react';
 import Webcam from 'react-webcam';
@@ -23,7 +23,6 @@ function RecordAnswerSection({ interviewQuestions, activeindex, interviewData }:
 
     const {
         error,
-        interimResult,
         isRecording,
         results,
         startSpeechToText,
@@ -34,39 +33,25 @@ function RecordAnswerSection({ interviewQuestions, activeindex, interviewData }:
         useLegacyResults: false,
     });
 
-
     useEffect(() => {
-        results.map((result) => (
-            //@ts-ignore
-            setUserAnswer(prevAns => prevAns + result?.transcript)
-        ))
+        results.forEach((result) => {
+            // @ts-expect-error (Expecting an issue if the next line has type issues)
+            setUserAnswer(prevAns => prevAns + result?.transcript);
+        });
     }, [results]);
 
-    useEffect(() => {
-        if (!isRecording && userAnswer.length > 10) {
-            UpdateUserAnswer();
-        }
-    },[userAnswer])
-
-    const saveuseranswer = async () => {
-        if (isRecording) {
-            stopSpeechToText();
-
-        } else {
-            startSpeechToText();
-        }
-    }
-
-    const UpdateUserAnswer = async () => {
+    // Memoized function to avoid recreating during re-renders
+    const UpdateUserAnswer = useCallback(async () => {
         setIsloading(true);
         const feedbackprompt = `Question:${interviewQuestions[activeindex]?.question},
-                                User Answer:${userAnswer}, Depends on question and user answer for give interview question please give us rating for answer and feedback as area of improvment if any
+                                User Answer:${userAnswer}, Depends on question and user answer for give interview question please give us rating for answer and feedback as area of improvement if any
                                 in just 3 to 5 lines to improve it in JSON format with rating field and feedback field`;
+
         const result = await chatSession.sendMessage(feedbackprompt);
         const feedbackresp = (await result.response.text()).replace('```json', '').replace('```', '');
         console.log(feedbackresp);
         const Jsonfeedback = JSON.parse(feedbackresp);
-        
+
         const resp = await db.insert(UserAnswer).values({
             mockIdRef: interviewData?.mockId,
             question: interviewQuestions[activeindex]?.question,
@@ -74,17 +59,32 @@ function RecordAnswerSection({ interviewQuestions, activeindex, interviewData }:
             userAns: userAnswer,
             feedback: Jsonfeedback?.feedback,
             rating: Jsonfeedback?.rating,
-            userEmail:user?.primaryEmailAddress?.emailAddress,
+            userEmail: user?.primaryEmailAddress?.emailAddress,
             createdAt: moment().format('YYYY-MM-DD HH:mm:ss')
-        })
+        });
 
-        if(resp){
+        if (resp) {
             toast.success("Answer Saved Successfully");
         }
+
         setUserAnswer('');
         setResults([]);
         setIsloading(false);
-    }
+    }, [interviewQuestions, activeindex, userAnswer, user?.primaryEmailAddress?.emailAddress, interviewData?.mockId, setResults]);
+
+    useEffect(() => {
+        if (!isRecording && userAnswer.length > 10) {
+            UpdateUserAnswer();
+        }
+    }, [isRecording, userAnswer, UpdateUserAnswer]);
+
+    const saveuseranswer = async () => {
+        if (isRecording) {
+            stopSpeechToText();
+        } else {
+            startSpeechToText();
+        }
+    };
 
     return (
         <div>

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Navbar from './_components/Navbar';
 import { Toaster } from '@/components/ui/sonner';
 
-function DashboardLayout({ children }: any) {
+interface DashboardLayoutProps {
+  children: ReactNode;
+}
+
+function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 min-h-screen text-white">
       <Navbar />

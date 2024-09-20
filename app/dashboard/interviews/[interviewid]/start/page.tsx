@@ -1,32 +1,30 @@
-"use client"
-import React, { useState, useEffect } from 'react'
-import { db } from '@/utils/db'
-import { MockInterview } from '@/utils/schema'
-import { eq } from 'drizzle-orm'
-import { InterviewData } from '@/types/interviewdata'
-import QuestionSection from './_components/questionSection'
-import RecordAnswerSection from './_components/RecordAnswerSection'
-import { Button } from '@/components/ui/button'
+"use client";
+import React, { useState, useEffect } from 'react';
+import { db } from '@/utils/db';
+import { MockInterview } from '@/utils/schema';
+import { eq } from 'drizzle-orm';
+import { InterviewData } from '@/types/interviewdata';
+import QuestionSection from './_components/questionSection';
+import RecordAnswerSection from './_components/RecordAnswerSection';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-
-function startinterview({ params }: { params: { interviewid: string } }) {
+function StartInterview({ params }: { params: { interviewid: string } }) {
   const [interviewData, setInterviewData] = useState<InterviewData>({} as InterviewData);
-  const [interviewQuestions, setInterviewQuestions] = useState<{ question: string, answer: string }[]>([]);
+  const [interviewQuestions, setInterviewQuestions] = useState<{ question: string; answer: string }[]>([]);
   const [activeQuestion, setActiveQuestion] = useState(0);
 
-
   useEffect(() => {
-    GetInterviewDetails();
-  }, [])
+    const GetInterviewDetails = async () => {
+      const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewid));
+      const jsonMockResp = JSON.parse(result[0].jsonMockResp);
+      console.log(jsonMockResp);
+      setInterviewData(result[0]);
+      setInterviewQuestions(jsonMockResp);
+    };
 
-  const GetInterviewDetails = async () => {
-    const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewid))
-    const jsonMockResp = JSON.parse(result[0].jsonMockResp)
-    console.log(jsonMockResp);
-    setInterviewData(result[0]);
-    setInterviewQuestions(jsonMockResp);
-  }
+    GetInterviewDetails();
+  }, [params.interviewid]); // Add 'params.interviewid' as a dependency
 
   return (
     <div>
@@ -36,20 +34,18 @@ function startinterview({ params }: { params: { interviewid: string } }) {
       </div>
 
       <div className='flex justify-end gap-6 mb-10'>
-        {activeQuestion > 0 &&
-          <Button onClick={() => setActiveQuestion(activeQuestion - 1)}>Previous Question</Button>
-        }
-        {activeQuestion != interviewQuestions.length - 1 &&
+        {activeQuestion > 0 && <Button onClick={() => setActiveQuestion(activeQuestion - 1)}>Previous Question</Button>}
+        {activeQuestion !== interviewQuestions.length - 1 && (
           <Button onClick={() => setActiveQuestion(activeQuestion + 1)}>Next Question</Button>
-        }
-        {activeQuestion == interviewQuestions.length - 1 &&
+        )}
+        {activeQuestion === interviewQuestions.length - 1 && (
           <Link href={`/dashboard/interviews/${interviewData.mockId}/feedback`}>
             <Button>Submit</Button>
           </Link>
-        }
+        )}
       </div>
     </div>
-  )
+  );
 }
 
-export default startinterview
+export default StartInterview;

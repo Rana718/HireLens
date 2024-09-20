@@ -6,7 +6,6 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { chatSession } from '@/utils/Aimod'
 import { LoaderCircle } from 'lucide-react'
 import { db } from '@/utils/db'
-//@ts-ignore
+// @ts-expect-error
 import { v4 as uuidv4 } from 'uuid';
 import { MockInterview } from '@/utils/schema'
 import { useUser } from '@clerk/nextjs'
@@ -28,9 +27,9 @@ function AddNewInterview() {
     const [jobDescription, setJobDescription] = useState("");
     const [yearOfExperience, setYearOfExperience] = useState("");
     const router = useRouter();
-    const [mode, setMode] = useState(5);
+    const mode = 5;
     const [loading, setLoading] = useState(false);
-    const [response, setResponse] = useState([]); 
+
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();
@@ -39,14 +38,12 @@ function AddNewInterview() {
         const context = `
             job Position: ${jobrole}, Job Description: ${jobDescription}, Years of Experience: ${yearOfExperience}, Based on this information, please give me ${mode} interview questions with answers in JSON format, with "question" and "answer" as fields.
         `;
-        
+
         const result = await chatSession.sendMessage(context);
         const modedata = (await result.response.text()).replace('```json', '').replace('```', '');
-        console.log(modedata);
-        setResponse(modedata);
 
         if (modedata) {
-            // @ts-ignore
+            // @ts-expect-error
             const resp = await db.insert(MockInterview).values({
                     mockId: uuidv4(),
                     jsonMockResp: modedata,
