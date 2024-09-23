@@ -77,3 +77,22 @@
   animation: fadeInUp 0.5s ease-out both;
 }
 
+
+.glow {
+  box-shadow: 0 0 5px rgba(72, 187, 120, 1), 0 0 10px rgba(72, 187, 120, 1), 0 0 15px rgba(72, 187, 120, 1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.hover\:glow:hover {
+  box-shadow: 0 0 10px rgba(72, 187, 120, 1), 0 0 20px rgba(72, 187, 120, 1), 0 0 30px rgba(72, 187, 120, 1);
+}
+
+.glowhome {
+  box-shadow: 0 0 5px rgb(26, 76, 175), 0 0 10px rgb(26, 76, 175), 0 0 15px rgb(26, 76, 175);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.hover\:glowhome:hover {
+  box-shadow: 0 0 10px rgb(26, 76, 175) 0 0 20px rgba(26, 76, 175), 0 0 30px rgb(26, 76, 175);
+}
+

@@ -4,18 +4,29 @@ import AddNewInterview from './_components/AddNewInterview';
 
 function Dashboardpage() {
   return (
-    <div className="p-10 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 min-h-screen">
-      <h2 className="font-bold text-3xl text-white animate-fadeInUp">Dashboard</h2>
-      <h2 className="text-gray-400 mb-4 animate-fadeInUp">Create and Start your AI Mockup Interview</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-5">
-        <div className="transition-transform transform hover:scale-105 duration-300 animate-fadeInUp">
-          <AddNewInterview />
+    <div className="p-10 bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-900 min-h-screen rounded-2xl">
+      <div className="max-w-7xl mx-auto">
+        
+        <div className="text-center mb-10">
+          <h2 className="font-extrabold text-4xl text-white tracking-wide animate-fadeInUp">
+            Dashboard
+          </h2>
+          <p className="text-gray-400 mt-3 text-lg animate-fadeInUp">
+            Create and Start your AI Mockup Interview
+          </p>
         </div>
-      </div>
 
-      <div className="transition-opacity duration-500 ease-in-out opacity-90 hover:opacity-100 animate-fadeInUp">
-        <InterViewList />
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div className="transform hover:scale-105 duration-300 transition-opacity rounded-lg p-6 animate-fadeInUp">
+            <AddNewInterview />
+          </div>
+        </div>
+
+        
+        <div className="transition-opacity duration-700 ease-in-out opacity-90 hover:opacity-100 animate-fadeInUp">
+          <InterViewList />
+        </div>
       </div>
     </div>
   );

@@ -24,12 +24,12 @@ function StartInterview({ params }: { params: { interviewid: string } }) {
     };
 
     GetInterviewDetails();
-  }, [params.interviewid]); // Add 'params.interviewid' as a dependency
+  }, [params.interviewid]);
 
   return (
     <div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-        <QuestionSection interviewQuestions={interviewQuestions} activeindex={activeQuestion} />
+        <QuestionSection interviewQuestions={interviewQuestions} activeindex={activeQuestion} setActiveQuestion={setActiveQuestion}/>
         <RecordAnswerSection interviewQuestions={interviewQuestions} activeindex={activeQuestion} interviewData={interviewData} />
       </div>
 

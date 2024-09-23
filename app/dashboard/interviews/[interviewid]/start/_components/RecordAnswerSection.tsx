@@ -40,7 +40,7 @@ function RecordAnswerSection({ interviewQuestions, activeindex, interviewData }:
         });
     }, [results]);
 
-    // Memoized function to avoid recreating during re-renders
+   
     const UpdateUserAnswer = useCallback(async () => {
         setIsloading(true);
         const feedbackprompt = `Question:${interviewQuestions[activeindex]?.question},
@@ -87,31 +87,38 @@ function RecordAnswerSection({ interviewQuestions, activeindex, interviewData }:
     };
 
     return (
-        <div>
-            <div className="flex flex-col mt-20 justify-center items-center bg-secondary rounded-lg p-10 relative">
-                <WebcamIcon className="h-72 w-72 absolute text-black bg-gray-100 p-10 rounded-lg mb-4" />
-                <Webcam
-                    mirrored={true}
-                    style={{
-                        height: 300,
-                        width: '100%',
-                        zIndex: 10,
-                    }}
-                />
-            </div>
-
-            <Button className="mt-10" disabled={isloading} onClick={saveuseranswer}>
-                {isRecording ? (
-                    <h2 className="text-red-600 flex gap-2">
-                        <Mic /> Stop Recording
-                    </h2>
-                ) : (
-                    'Record Answer'
-                )}
-            </Button>
-
-            {error && <p className="text-red-500 mt-4">Error: {error}</p>}
+        <div className=" flex flex-col items-center py-10">
+        <div className="flex flex-col justify-center items-center rounded-lg p-8 relative overflow-hidden">
+            <WebcamIcon className="h-32 w-32 absolute text-gray-600 p-4 rounded-full" />
+            <Webcam
+                mirrored={true}
+                style={{
+                    height: 300,
+                    width: '100%',
+                    zIndex: 10,
+                    borderRadius: '8px',
+                    border: '2px solid #ccc',
+                }}
+            />
         </div>
+
+        <Button
+            className={`mt-10 transition-all duration-300 ${isloading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700 text-white'} px-6 py-2 rounded-md shadow-md flex items-center`}
+            disabled={isloading}
+            onClick={saveuseranswer}
+        >
+            {isRecording ? (
+                <>
+                    <Mic className="mr-2" />
+                    <span className="text-red-600">Stop Recording</span>
+                </>
+            ) : (
+                'Record Answer'
+            )}
+        </Button>
+
+        {error && <p className="text-red-500 mt-4">Error: {error}</p>}
+    </div>
     );
 }
 

@@ -27,7 +27,7 @@ function AddNewInterview() {
     const [jobDescription, setJobDescription] = useState("");
     const [yearOfExperience, setYearOfExperience] = useState("");
     const router = useRouter();
-    const mode = 5;
+    const [mode, setMode] = useState("5");
     const [loading, setLoading] = useState(false);
 
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -124,6 +124,20 @@ function AddNewInterview() {
                                     />
                                 </div>
 
+                                <div className="my-3">
+                                    <label className="text-gray-300">Set expected question</label>
+                                    <Input
+                                        className="mt-2 bg-gray-800 text-white border-gray-700 focus:ring-yellow-400 focus:border-yellow-400"
+                                        placeholder="By default, 5 questions will be generated"
+                                        type="number"
+                                        max={15}
+                                        min={4}
+                                        value={mode}
+                                        onChange={(e) => setMode(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
                                 <div className="flex gap-5 justify-end mt-5">
                                     <Button
                                         variant="destructive"
@@ -140,7 +154,7 @@ function AddNewInterview() {
                                         {loading ? (
                                             <>
                                                 <LoaderCircle className="animate-spin mr-2" />
-                                                Generating from AI
+                                                Generating...
                                             </>
                                         ) : (
                                             'Start Interview'

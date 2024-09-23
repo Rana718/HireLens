@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import Navbar from './_components/Navbar';
 import { Toaster } from '@/components/ui/sonner';
+import Footer from './_components/Footer';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -8,11 +9,12 @@ interface DashboardLayoutProps {
 
 function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 min-h-screen text-white">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-blue-800 text-white">
       <Navbar />
-      <div className="pt-16 mx-5 md:mx-20 lg:mx-36">
+      <div className="flex-grow pt-20 px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-48 pb-5">
         {children}
       </div>
+      <Footer />
       <Toaster />
     </div>
   );
