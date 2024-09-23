@@ -51,7 +51,7 @@ function Feedback({ params }: { params: { interviewid: string } }) {
                     <p className='pt-5 px-20'>
                         To receive your feedback, please ensure that you complete the interview first. Once you have finished, you can return to this page to view the detailed feedback regarding your performance.
                         The feedback will include insights into your strengths and areas where you can improve, providing you with a comprehensive overview of your responses. This information is essential for your growth, as it helps identify patterns in your answers and highlights specific skills that may need enhancement.
-                        Completing the interview is an important step in your preparation journey, and we encourage you to take your time to showcase your abilities fully. Once you've submitted your answers, you&apos;ll gain access to personalized feedback tailored to your performance.
+                        Completing the interview is an important step in your preparation journey, and we encourage you to take your time to showcase your abilities fully. Once you&apos;ve submitted your answers, you&apos;ll gain access to personalized feedback tailored to your performance.
                         We appreciate your effort and dedication to self-improvement. Remember, each interview is a valuable learning opportunity, so don&apos;t hesitate to dive in and give it your best shot! We look forward to seeing your progress.
                     </p>
                     <Button
@@ -60,9 +60,6 @@ function Feedback({ params }: { params: { interviewid: string } }) {
                     >
                         Start Interview
                     </Button>
-
-
-
                 </>
             ) : (
                 <>
@@ -106,7 +103,6 @@ function Feedback({ params }: { params: { interviewid: string } }) {
                     Go Home
                 </Button>
             </div>
-
         </div>
     );
 }

@@ -137,9 +137,9 @@ function Interview({ params }: { params: { interviewid: string } }) {
       transition={{ duration: 0.3 }}
     >
       <Link href={`/dashboard/interviews/${params.interviewid}/start`}>
-        <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out">
+        <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out">
           Start Interview
-        </button>
+        </Button>
       </Link>
     </motion.div>
   </div>

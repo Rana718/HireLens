@@ -5,10 +5,10 @@ const InterviewBotPage: React.FC = () => {
     <div className="min-h-screen flex flex-col items-center justify-center p-6">
       <h1 className="text-4xl font-bold text-center mb-6 text-blue-600">How to Work with Our AI Interview Bot</h1>
       <p className="text-lg text-white mb-4">
-        Our Interview Bot utilizes the powerful <span className="font-semibold text-green-500">ChatGPT 4.0</span> model to assist you in preparing for your upcoming interviews. To get started, simply input your interview field, tech stack, and years of experience. Specify the number of questions you'd like the bot to generate based on your input. This customization ensures that the questions are relevant to your specific situation, enhancing your preparation.
+        Our Interview Bot utilizes the powerful <span className="font-semibold text-green-500">ChatGPT 4.0</span> model to assist you in preparing for your upcoming interviews. To get started, simply input your interview field, tech stack, and years of experience. Specify the number of questions you&apos;d like the bot to generate based on your input. This customization ensures that the questions are relevant to your specific situation, enhancing your preparation.
       </p>
       <p className="text-lg text-white mb-4">
-        Once you've provided the necessary details, the AI will generate a set of relevant questions along with ideal answers tailored to your profile. This feature helps you understand the common questions asked in your industry, allowing you to prepare effectively and confidently. You'll also gain insights into the types of responses that interviewers typically expect.
+        Once you&apos;ve provided the necessary details, the AI will generate a set of relevant questions along with ideal answers tailored to your profile. This feature helps you understand the common questions asked in your industry, allowing you to prepare effectively and confidently. You&apos;ll also gain insights into the types of responses that interviewers typically expect.
       </p>
       <p className="text-lg text-white mb-4">
         You can then answer each question, simulating a real interview environment. For added confidence, you can open your webcam to practice your responses and utilize <span className="font-semibold text-blue-500">speech-to-text functionality</span>. This interactive approach not only makes the process more engaging but also aids in improving your verbal communication skills and body language, both of which are crucial during interviews.
