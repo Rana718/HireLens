@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import Navbar from './_components/Navbar';
 import { Toaster } from '@/components/ui/sonner';
-import Footer from './_components/Footer';
 
 interface DashboardLayoutProps {
   children: ReactNode;
