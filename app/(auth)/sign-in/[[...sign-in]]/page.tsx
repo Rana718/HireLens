@@ -1,22 +1,12 @@
 import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 export default function SignInPage() {
   return (
     <section className="bg-gray-900 min-h-screen">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <motion.section
-          className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <motion.div
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1 }}
-          >
+        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+          <div>
             <Image
               alt=""
               src="/interview.png"
@@ -24,14 +14,9 @@ export default function SignInPage() {
               height={300}
               className="absolute inset-0 h-full w-full object-cover opacity-80"
             />
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="hidden lg:relative lg:block lg:p-12"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
+          <div className="hidden lg:relative lg:block lg:p-12">
             <a className="block text-white hover:opacity-80 transition-opacity duration-300" href="#">
               <span className="sr-only">Home</span>
               <svg
@@ -47,37 +32,22 @@ export default function SignInPage() {
               </svg>
             </a>
 
-            <motion.h2
-              className="mt-6 text-3xl font-bold text-white sm:text-4xl md:text-5xl"
-              initial={{ x: -100 }}
-              animate={{ x: 0 }}
-              transition={{ delay: 0.3, duration: 1 }}
-            >
+            <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl md:text-5xl">
               Welcome to HireLens
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              className="mt-4 leading-relaxed text-white/90"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-            >
+            <p className="mt-4 leading-relaxed text-white/90">
               HireLens is an AI-powered platform for mastering job interviews.
               Get personalized mock interviews, real-time feedback, and expert
               resources to enhance your skills and confidence.
-            </motion.p>
-          </motion.div>
-        </motion.section>
+            </p>
+          </div>
+        </section>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <motion.div
-            className="max-w-xl lg:max-w-3xl"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
+          <div className="max-w-xl lg:max-w-3xl">
             <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
-          </motion.div>
+          </div>
         </main>
       </div>
     </section>
