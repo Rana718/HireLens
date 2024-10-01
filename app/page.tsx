@@ -12,10 +12,10 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-800 via-indigo-900 to-black flex flex-col justify-center items-center px-4 text-center">
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex flex-col justify-center items-center px-4 text-center">
       
       <motion.h1
-        className="text-5xl sm:text-6xl font-bold text-white mb-6"
+        className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -24,7 +24,7 @@ export default function Page() {
       </motion.h1>
 
       <motion.p
-        className="text-lg sm:text-xl text-gray-300 mb-12 max-w-2xl"
+        className="text-lg sm:text-xl text-gray-700 mb-12 max-w-2xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
@@ -39,26 +39,26 @@ export default function Page() {
         transition={{ duration: 0.8, delay: 0.5 }}
       >
         <div>
-          <h3 className="text-xl font-semibold text-white">💼 Realistic Scenarios</h3>
-          <p className="text-gray-400 mt-2">
+          <h3 className="text-xl font-semibold text-gray-900">💼 Realistic Scenarios</h3>
+          <p className="text-gray-600 mt-2">
             Experience industry-standard questions and scenarios designed to simulate real interview settings.
           </p>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-white">🧠 AI-Driven Feedback</h3>
-          <p className="text-gray-400 mt-2">
+          <h3 className="text-xl font-semibold text-gray-900">🧠 AI-Driven Feedback</h3>
+          <p className="text-gray-600 mt-2">
             Get detailed insights and recommendations to improve your answers and delivery.
           </p>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-white">⏱️ Time-Sensitive Tasks</h3>
-          <p className="text-gray-400 mt-2">
+          <h3 className="text-xl font-semibold text-gray-900">⏱️ Time-Sensitive Tasks</h3>
+          <p className="text-gray-600 mt-2">
             Practice completing tasks within time constraints to simulate the pressure of real interviews.
           </p>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-white">📊 Performance Analysis</h3>
-          <p className="text-gray-400 mt-2">
+          <h3 className="text-xl font-semibold text-gray-900">📊 Performance Analysis</h3>
+          <p className="text-gray-600 mt-2">
             Track your performance over time to see how much you&apos;ve improved with each session.
           </p>
         </div>

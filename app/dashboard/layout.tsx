@@ -14,7 +14,6 @@ function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex-grow pt-20 px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-48 pb-5">
         {children}
       </div>
-      <Footer />
       <Toaster />
     </div>
   );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import Footer from "./dashboard/_components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,7 +18,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Welcome to HireLens",
   description: "HireLens is an AI-powered platform providing personalized mock interviews, real-time feedback, and expert insights for interview success",
-  icons:{
+  icons: {
     icon: "/hire_lens_logo.ico"
   }
 };
@@ -33,7 +34,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          <div>
+            {children}
+            <Footer/>
+          </div>
         </body>
       </html>
     </ClerkProvider>
