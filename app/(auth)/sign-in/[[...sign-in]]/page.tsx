@@ -1,6 +1,6 @@
 import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
-import { motion } from "framer-motion"; // Framer Motion for animations
+import { motion } from "framer-motion";
 
 export default function SignInPage() {
   return (
