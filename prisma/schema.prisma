@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String           @id @default(uuid())
+  clerkUserId     String           @unique
+  email           String           @unique
+  name            String?
+  imageUrl        String?
+  industry        String?
+  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
+
+  // Profile fields
+  bio        String?
+  experience Int?
+
+  // Relations
+  skills               String[]
+  assessments          Assessment[]
+  resume               Resume?
+  coverLetter          CoverLetter[]
+  mockInterviewAnswers MockInterviewAnswer[]
+}
+
+model Assessment {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  quizScore      Float
+  questions      Json[]
+  category       String
+  improvementTip String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Resume {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  content   String   @db.Text
+  atsScore  Float?
+  feedback  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CoverLetter {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  content        String
+  jobDescription String?
+  companyName    String
+  jobTitle       String
+  status         String   @default("draft")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model IndustryInsight {
+  id       String @id @default(cuid())
+  industry String @unique
+  users    User[]
+
+  // Salary data
+  salaryRanges Json[]
+
+  // Industry trends
+  growthRate  Float
+  demandLevel String
+  topSkills   String[]
+
+  // Market conditions
+  marketOutlook String
+  keyTrends     String[]
+
+  // Learning suggestions
+  recommendedSkills String[]
+
+  lastUpdated DateTime @default(now())
+  nextUpdate  DateTime
+
+  @@index([industry])
+}
+
+model MockInterviewAnswer {
+  id            String   @id @default(cuid())
+  // Fields from MockInterview
+  jsonMockResp  String
+  jobPosition   String
+  jobDesc       String
+  jobExperience String
+  mockId        String
+  // Fields from UserAnswer
+  question      String
+  correctAns    String?
+  userAns       String?
+  feedback      String?
+  rating        String?
+  // Relation to User
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+}
