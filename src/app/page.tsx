@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,8 +13,22 @@ import {
 } from "@/components/ui/accordion";
 import Image from "next/image";
 import { features, faqs, testimonial, howItWorks } from "@/constants/infodata";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
+   const { isLoaded, isSignedIn } = useUser();
+   const router = useRouter();
+
+   useEffect(() => {
+      if (isLoaded && isSignedIn) {
+         router.push("/dashboard");
+      }
+   }, [isLoaded, isSignedIn, router]);
+
+   // Optionally, while checking user status, you can return null or a spinner
+   if (!isLoaded) return null;
+
    return (
       <>
          <div className="grid-background"></div>
@@ -84,8 +99,7 @@ export default function LandingPage() {
                      Our Simple 4-Step Process
                   </h2>
                   <p className="text-muted-foreground">
-                     Experience a seamless journey towards career
-                     transformation.
+                     Experience a seamless journey towards career transformation.
                   </p>
                </div>
 
@@ -168,8 +182,7 @@ export default function LandingPage() {
                      Got Questions? We’ve Got Answers
                   </h2>
                   <p className="text-muted-foreground">
-                     Explore our FAQs to learn more about our innovative
-                     platform.
+                     Explore our FAQs to learn more about our innovative platform.
                   </p>
                </div>
 
@@ -196,8 +209,7 @@ export default function LandingPage() {
                      Ready to Transform Your Career?
                   </h2>
                   <p className="mx-auto max-w-[600px] text-primary-foreground/80 md:text-xl">
-                     Join our community of innovators and unlock your full
-                     potential today.
+                     Join our community of innovators and unlock your full potential today.
                   </p>
                   <Link href="/dashboard" passHref>
                      <Button

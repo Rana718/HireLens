@@ -1,16 +1,30 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import CoverLetterPreview from "../_components/ConverLetterPreview";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { getCoverLetter } from "@/actions/cover-letter";
+import { useParams } from "next/navigation";
 
-interface PageProps {
-    params: { id: string };
-}
+const Page = () => {
+    const [coverLetter, setCoverLetter] = useState<any>(null);
+    const { id } = useParams();
 
-const Page: React.FC<PageProps> = async ({ params }) => {
-    const coverLetter = await getCoverLetter(params.id);
+    useEffect(() => {
+        const fetchCoverLetter = async () => {
+            if (id) {
+                const letter = await getCoverLetter(id as string);
+                setCoverLetter(letter);
+            }
+        };
+
+        fetchCoverLetter();
+    }, [id]);
+
+    if (!coverLetter) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="container mx-auto py-6">

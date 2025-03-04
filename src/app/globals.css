@@ -37,13 +37,28 @@ body {
    --border-radius-sm: calc(var(--radius) - 4px);
 
    --keyframes-accordion-down: {
-      from { height: 0; }
-      to { height: var(--radix-accordion-content-height); }
-   };
+      from {
+         height: 0;
+      }
+
+      to {
+         height: var(--radix-accordion-content-height);
+      }
+   }
+
+   ;
+
    --keyframes-accordion-up: {
-      from { height: var(--radix-accordion-content-height); }
-      to { height: 0; }
-   };
+      from {
+         height: var(--radix-accordion-content-height);
+      }
+
+      to {
+         height: 0;
+      }
+   }
+
+   ;
 
    --animation-accordion-down: accordion-down 0.2s ease-out;
    --animation-accordion-up: accordion-up 0.2s ease-out;
@@ -162,4 +177,14 @@ body {
    width: 100%;
    height: 100%;
    background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.9));
+}
+
+
+.no-scrollbar::-webkit-scrollbar {
+   display: none;
+}
+
+.no-scrollbar {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
 }

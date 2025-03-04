@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import DashboardView from './_components/DashboardPreview';
 import { getUserOnboardingStatus } from '@/actions/users';
+import { ToolBar } from './_components/ToolBar';
 
 async function page() {
     const { isOnboarded } = await getUserOnboardingStatus();
@@ -17,6 +18,7 @@ async function page() {
 
     return (
         <div className="container mx-auto">
+            <ToolBar />
             <DashboardView insights={insights} />
         </div>
     );

@@ -97,7 +97,7 @@ model IndustryInsight {
 model MockInterviewAnswer {
   id            String   @id @default(cuid())
   // Fields from MockInterview
-  jsonMockResp  String
+  jsonMockResp  Json[]
   jobPosition   String
   jobDesc       String
   jobExperience String

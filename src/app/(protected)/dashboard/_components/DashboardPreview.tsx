@@ -77,7 +77,7 @@ const DashboardView = ({ insights }: DashboardViewProps) => {
     );
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 mt-10">
             <div className="flex justify-between items-center">
                 <Badge variant="outline">Updated on: {lastUpdatedDate}</Badge>
             </div>
