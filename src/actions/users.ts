@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { generateAIInsights } from "./dashboard";
 
-export async function updateUser(data:any) {
+export async function updateUser(data: any) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
@@ -16,17 +16,15 @@ export async function updateUser(data:any) {
     if (!user) throw new Error("User not found");
 
     try {
-        // Start a transaction to handle both operations
         const result = await db.$transaction(
             async (tx) => {
-                // First check if industry exists
                 let industryInsight = await tx.industryInsight.findUnique({
                     where: {
                         industry: data.industry,
                     },
                 });
 
-                // If industry doesn't exist, create it with default values
+
                 if (!industryInsight) {
                     const insights = await generateAIInsights(data.industry);
 
@@ -39,7 +37,6 @@ export async function updateUser(data:any) {
                     });
                 }
 
-                // Now update the user
                 const updatedUser = await tx.user.update({
                     where: {
                         id: user.id,
@@ -55,7 +52,7 @@ export async function updateUser(data:any) {
                 return { updatedUser, industryInsight };
             },
             {
-                timeout: 10000, 
+                timeout: 10000,
             }
         );
 
