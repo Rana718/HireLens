@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme.provider";
 import { dark } from "@clerk/themes";
+import { config } from "@/config/env";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
       "Career Guidance",
       "Interview Preparation",
    ],
+   icons: {
+      icon: "/logotop.ico"
+   }
 };
 
 export default function RootLayout({
@@ -32,7 +36,7 @@ export default function RootLayout({
       <ClerkProvider appearance={{ baseTheme: dark }}>
          <html lang="en" suppressHydrationWarning>
             <head>
-               <link rel="icon" href="/logo.png" sizes="any" />
+               <script defer src="https://cloud.umami.is/script.js" data-website-id={config.WEBSITE_ID}></script>
             </head>
             <body className={inter.className}>
                <ThemeProvider
