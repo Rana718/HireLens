@@ -7,6 +7,9 @@ import (
 )
 
 func UserRoutes(app fiber.Router) {
+	app.Get("/verify", user.EmailVerificationSend)
+	app.Get("/verify/:otp", user.EmailVerification)
+
 	auth := app.Group("/auth")
 
 	auth.Post("/login", user.Login)

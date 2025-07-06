@@ -1,12 +1,14 @@
 package user
 
 import (
+	"apiserver/config"
 	"apiserver/db"
 	"apiserver/middleware"
 	"apiserver/repo"
 	"context"
 	"database/sql"
 	"log"
+	"time"
 
 	"apiserver/models"
 	"apiserver/utils"
@@ -195,4 +197,41 @@ func RefreshTokens(c fiber.Ctx) error {
 		"refresh_token": tokens.RefreshToken,
 		"message":       "Tokens refreshed",
 	})
+}
+
+func EmailVerificationSend(c fiber.Ctx) error {
+	user := middleware.GetCurrentUser(c)
+
+	otp := "1111"
+	_, err := config.Client.Set(config.Ctx, "email:verification:"+user.Email, otp, 5*time.Minute).Result()
+
+	if err != nil {
+		log.Printf("Failed to set email verification OTP: %v\n", err)
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to send verification email"})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"message": "Verification email sent successfully"})
+}
+
+func EmailVerification(c fiber.Ctx) error {
+	user := middleware.GetCurrentUser(c)
+	otp := c.Params("otp")
+
+	userOtp, err := config.Client.Get(config.Ctx, "email:verification:"+user.Email).Result()
+	if err != nil {
+		log.Printf("Failed to get email verification OTP: %v\n", err)
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to verify email"})
+	}
+
+	if otp != userOtp {
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid OTP"})
+	}
+
+	_, err = db.DBStore.UpdateUserEmailVerified(context.Background(), int32(user.UserID))
+	if err != nil {
+		log.Printf("Failed to update email verification status: %v\n", err)
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to verify email"})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"message": "Email verified successfully"})
 }

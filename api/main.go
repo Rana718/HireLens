@@ -3,6 +3,7 @@ package main
 import (
 	"apiserver/config"
 	"apiserver/db"
+	"apiserver/middleware"
 	"apiserver/routes"
 	"apiserver/utils"
 	"log"
@@ -33,6 +34,7 @@ func main() {
 	app.Use(logger.New(logger.Config{
 		Format: "[${time}] ${ip} ${status} - ${method} ${path} (${latency})\n",
 	}))
+	app.Use(middleware.AuthMiddleware())
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("Hello, World!")
