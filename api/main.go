@@ -3,12 +3,14 @@ package main
 import (
 	"apiserver/config"
 	"apiserver/db"
+	"apiserver/routes"
 	"apiserver/utils"
+	"log"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/joho/godotenv"
-	"log"
 )
 
 func init() {
@@ -35,6 +37,10 @@ func main() {
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
+
+	// api routes
+	api := app.Group("/api")
+	routes.UserRoutes(api)
 
 	port := utils.GetEnv("PORT", "8000")
 

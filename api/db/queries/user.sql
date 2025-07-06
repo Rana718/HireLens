@@ -1,22 +1,22 @@
 -- name: CreateUser :one
 INSERT INTO "User" (
-        name,
-        email,
-        password,
-        provider
-    )
+    name,
+    email,
+    password,
+    imageUrl
+)
 VALUES ($1, $2, $3, $4)
 RETURNING *;
 
 -- name: CreateOAuthUser :one
 INSERT INTO "User" (
-        name,
-        email,
-        imageUrl,
-        provider,
-        providerAccountId,
-        emailVerified
-    )
+    name,
+    email,
+    imageUrl,
+    provider,
+    providerAccountId,
+    emailVerified
+)
 VALUES ($1, $2, $3, $4, $5, true)
 RETURNING *;
 
@@ -29,7 +29,7 @@ WHERE email = $1;
 SELECT *
 FROM "User"
 WHERE provider = $1
-    AND providerAccountId = $2;
+  AND providerAccountId = $2;
 
 -- name: UpdateUserEmailVerified :one
 UPDATE "User"
@@ -41,3 +41,9 @@ RETURNING *;
 SELECT *
 FROM "User"
 WHERE id = $1;
+
+-- name: UpdateUserLastLogin :one
+UPDATE "User"
+SET lastLogin = now()
+WHERE id = $1
+RETURNING lastLogin;

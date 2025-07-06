@@ -118,19 +118,22 @@ type Resume struct {
 }
 
 type User struct {
-	ID                int32            `json:"id"`
-	Email             string           `json:"email"`
-	Password          pgtype.Text      `json:"password"`
-	Name              string           `json:"name"`
-	Imageurl          pgtype.Text      `json:"imageurl"`
-	Industry          pgtype.Text      `json:"industry"`
-	Bio               pgtype.Text      `json:"bio"`
-	Experience        pgtype.Int4      `json:"experience"`
-	Currentcv         pgtype.Text      `json:"currentcv"`
-	Skills            []string         `json:"skills"`
-	Linkedinprofile   pgtype.Text      `json:"linkedinprofile"`
-	Github            pgtype.Text      `json:"github"`
-	Provider          NullAuthProvider `json:"provider"`
-	Provideraccountid pgtype.Text      `json:"provideraccountid"`
-	Emailverified     pgtype.Bool      `json:"emailverified"`
+	ID                int32              `json:"id"`
+	Email             string             `json:"email"`
+	Password          pgtype.Text        `json:"password"`
+	Name              string             `json:"name"`
+	Imageurl          pgtype.Text        `json:"imageurl"`
+	Industry          pgtype.Text        `json:"industry"`
+	Bio               pgtype.Text        `json:"bio"`
+	Experience        pgtype.Int4        `json:"experience"`
+	Currentcv         pgtype.Text        `json:"currentcv"`
+	Skills            []string           `json:"skills"`
+	Linkedinprofile   pgtype.Text        `json:"linkedinprofile"`
+	Github            pgtype.Text        `json:"github"`
+	Provider          AuthProvider       `json:"provider"`
+	Provideraccountid pgtype.Text        `json:"provideraccountid"`
+	Emailverified     bool               `json:"emailverified"`
+	Createdat         pgtype.Timestamptz `json:"createdat"`
+	Updatedat         pgtype.Timestamptz `json:"updatedat"`
+	Lastlogin         pgtype.Timestamptz `json:"lastlogin"`
 }

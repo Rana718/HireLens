@@ -6,6 +6,8 @@ package repo
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
@@ -15,6 +17,7 @@ type Querier interface {
 	GetUserById(ctx context.Context, id int32) (User, error)
 	GetUserByProviderAccount(ctx context.Context, arg GetUserByProviderAccountParams) (User, error)
 	UpdateUserEmailVerified(ctx context.Context, id int32) (User, error)
+	UpdateUserLastLogin(ctx context.Context, id int32) (pgtype.Timestamptz, error)
 }
 
 var _ Querier = (*Queries)(nil)

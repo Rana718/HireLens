@@ -15,9 +15,13 @@ CREATE TABLE "User" (
     skills TEXT [] NOT NULL,
     linkedInProfile TEXT,
     github TEXT,
-    provider "AuthProvider" DEFAULT 'CREDENTIALS'::"AuthProvider",
-    providerAccountId TEXT UNIQUE,
-    emailVerified BOOLEAN DEFAULT FALSE,
+    provider "AuthProvider" NOT NULL DEFAULT 'CREDENTIALS'::"AuthProvider",
+    providerAccountId TEXT,
+    emailVerified BOOLEAN NOT NULL DEFAULT FALSE,
+    createdAt TIMESTAMPTZ DEFAULT now(),
+    updatedAt TIMESTAMPTZ DEFAULT now(),
+    lastLogin TIMESTAMPTZ DEFAULT now(),
+    CONSTRAINT user_provider_unique UNIQUE (provider, providerAccountId),
     CONSTRAINT fk_user_industry FOREIGN KEY (industry) REFERENCES "IndustryInsight"(industry)
 );
 

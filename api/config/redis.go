@@ -1,9 +1,9 @@
 package config
 
 import (
-	"apiserver/utils"
 	"context"
 	"log"
+	"os"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -15,7 +15,11 @@ var (
 
 func InitRedis() {
 
-	redisURL := utils.GetEnv("REDIS_URL", "redis://localhost:6379")
+	redisURL := os.Getenv("REDIS_URL")
+	if redisURL == "" {
+		log.Fatal("REDIS_URL is not set")
+	}
+
 	opt, err := redis.ParseURL(redisURL)
 	if err != nil {
 		log.Fatalf("Invalid REDIS_URL: %v", err)

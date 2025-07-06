@@ -13,23 +13,23 @@ import (
 
 const createOAuthUser = `-- name: CreateOAuthUser :one
 INSERT INTO "User" (
-        name,
-        email,
-        imageUrl,
-        provider,
-        providerAccountId,
-        emailVerified
-    )
+    name,
+    email,
+    imageUrl,
+    provider,
+    providerAccountId,
+    emailVerified
+)
 VALUES ($1, $2, $3, $4, $5, true)
-RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 `
 
 type CreateOAuthUserParams struct {
-	Name              string           `json:"name"`
-	Email             string           `json:"email"`
-	Imageurl          pgtype.Text      `json:"imageurl"`
-	Provider          NullAuthProvider `json:"provider"`
-	Provideraccountid pgtype.Text      `json:"provideraccountid"`
+	Name              string       `json:"name"`
+	Email             string       `json:"email"`
+	Imageurl          pgtype.Text  `json:"imageurl"`
+	Provider          AuthProvider `json:"provider"`
+	Provideraccountid pgtype.Text  `json:"provideraccountid"`
 }
 
 func (q *Queries) CreateOAuthUser(ctx context.Context, arg CreateOAuthUserParams) (User, error) {
@@ -57,26 +57,29 @@ func (q *Queries) CreateOAuthUser(ctx context.Context, arg CreateOAuthUserParams
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
 }
 
 const createUser = `-- name: CreateUser :one
 INSERT INTO "User" (
-        name,
-        email,
-        password,
-        provider
-    )
+    name,
+    email,
+    password,
+    imageUrl
+)
 VALUES ($1, $2, $3, $4)
-RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 `
 
 type CreateUserParams struct {
-	Name     string           `json:"name"`
-	Email    string           `json:"email"`
-	Password pgtype.Text      `json:"password"`
-	Provider NullAuthProvider `json:"provider"`
+	Name     string      `json:"name"`
+	Email    string      `json:"email"`
+	Password pgtype.Text `json:"password"`
+	Imageurl pgtype.Text `json:"imageurl"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -84,7 +87,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		arg.Name,
 		arg.Email,
 		arg.Password,
-		arg.Provider,
+		arg.Imageurl,
 	)
 	var i User
 	err := row.Scan(
@@ -103,12 +106,15 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 FROM "User"
 WHERE email = $1
 `
@@ -132,12 +138,15 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
 }
 
 const getUserById = `-- name: GetUserById :one
-SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 FROM "User"
 WHERE id = $1
 `
@@ -161,20 +170,23 @@ func (q *Queries) GetUserById(ctx context.Context, id int32) (User, error) {
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
 }
 
 const getUserByProviderAccount = `-- name: GetUserByProviderAccount :one
-SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+SELECT id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 FROM "User"
 WHERE provider = $1
-    AND providerAccountId = $2
+  AND providerAccountId = $2
 `
 
 type GetUserByProviderAccountParams struct {
-	Provider          NullAuthProvider `json:"provider"`
-	Provideraccountid pgtype.Text      `json:"provideraccountid"`
+	Provider          AuthProvider `json:"provider"`
+	Provideraccountid pgtype.Text  `json:"provideraccountid"`
 }
 
 func (q *Queries) GetUserByProviderAccount(ctx context.Context, arg GetUserByProviderAccountParams) (User, error) {
@@ -196,6 +208,9 @@ func (q *Queries) GetUserByProviderAccount(ctx context.Context, arg GetUserByPro
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
 }
@@ -204,7 +219,7 @@ const updateUserEmailVerified = `-- name: UpdateUserEmailVerified :one
 UPDATE "User"
 SET emailVerified = true
 WHERE id = $1
-RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified
+RETURNING id, email, password, name, imageurl, industry, bio, experience, currentcv, skills, linkedinprofile, github, provider, provideraccountid, emailverified, createdat, updatedat, lastlogin
 `
 
 func (q *Queries) UpdateUserEmailVerified(ctx context.Context, id int32) (User, error) {
@@ -226,6 +241,23 @@ func (q *Queries) UpdateUserEmailVerified(ctx context.Context, id int32) (User, 
 		&i.Provider,
 		&i.Provideraccountid,
 		&i.Emailverified,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Lastlogin,
 	)
 	return i, err
+}
+
+const updateUserLastLogin = `-- name: UpdateUserLastLogin :one
+UPDATE "User"
+SET lastLogin = now()
+WHERE id = $1
+RETURNING lastLogin
+`
+
+func (q *Queries) UpdateUserLastLogin(ctx context.Context, id int32) (pgtype.Timestamptz, error) {
+	row := q.db.QueryRow(ctx, updateUserLastLogin, id)
+	var lastlogin pgtype.Timestamptz
+	err := row.Scan(&lastlogin)
+	return lastlogin, err
 }
